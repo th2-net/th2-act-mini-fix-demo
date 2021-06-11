@@ -19,14 +19,30 @@ package com.exactpro.th2.uiframework.framework.components;
 import com.exactpro.th2.act.framework.builders.win.WinBuilderManager;
 import com.exactpro.th2.act.framework.builders.win.WinLocator;
 import com.exactpro.th2.act.framework.exceptions.UIFrameworkBuildingException;
+import com.exactpro.th2.act.framework.exceptions.UIFrameworkExecutionException;
 import com.exactpro.th2.act.framework.ui.WinUIElement;
+import com.exactpro.th2.act.grpc.hand.RhBatchResponse;
+import com.exactpro.th2.uiframework.framework.utils.ResponseUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static org.apache.commons.lang3.StringUtils.defaultString;
 
 public class OrdersGrid extends WinUIElement {
+	private static final String NAME_ATTRIBUTE = "Name";
+	private static final String HEADER_ATTRIBUTE = "Header";
+	private static final String AUTOMATION_ID_ATTRIBUTE = "AutomationId";
+	private static final String ORDER_CELL_XPATH_FORMAT = "List/ListItem[%s]/Text[%s]";
+	private static final Pattern CELL_INDEX_PATTERN = Pattern.compile("HeaderItem (\\d*)");
+
 	private WinLocator gridLocator;
+	private WinLocator headerLocator;
 
 
 	public OrdersGrid(WinBuilderManager builders) {
@@ -36,18 +52,50 @@ public class OrdersGrid extends WinUIElement {
 
 	public OrdersGrid init(WinLocator gridLocator) throws UIFrameworkBuildingException {
 		this.gridLocator = findAndSaveLocators(gridLocator, "ordersGridElId", false);
+		this.headerLocator = findAndSaveLocators(gridLocator.byId(HEADER_ATTRIBUTE), "ordersHeaderElId", false);
 		return this;
 	}
 
-	public Map<String, String> extractLastOrderFields(Map<String, String> extractionDetails) {
-		if (extractionDetails.isEmpty())
+	public Map<String, String> extractLastOrderFields(List<String> extractionFields) throws UIFrameworkBuildingException, UIFrameworkExecutionException {
+		return extractOrderFields(extractionFields, 1);
+	}
+
+	public Map<String, String> extractOrderFields(List<String> extractionFields, int rowNumber) throws UIFrameworkExecutionException, UIFrameworkBuildingException {
+		if (rowNumber < 0)
 			return Collections.emptyMap();
 
-		WinLocator orderLocator = gridLocator.byId("ListViewItem-0");
-		
+		Map<String, String> result = new HashMap<>(extractionFields.size());
+		for (String headerName : extractionFields) {
+			int cellNumber = getCellNumber(headerName);
+			if (cellNumber < 0)
+				continue;
 
-		Map<String, String> result = new HashMap<>(extractionDetails.size());
-		
+			result.put(headerName, extractField(rowNumber, cellNumber));
+		}
 		return result;
+	}
+
+
+	private String extractField(int rowNumber, int cellNumber) throws UIFrameworkExecutionException, UIFrameworkBuildingException {
+		String id = "extractCellNameElId_" + cellNumber;
+		String cellXpath = String.format(ORDER_CELL_XPATH_FORMAT, rowNumber, cellNumber);
+		builders.getElAttribute().id(id).winLocator(gridLocator.byXpath(cellXpath)).attributeName(NAME_ATTRIBUTE).build();
+		RhBatchResponse response = builders.getContext().submit("getCellValue_" + cellNumber);
+		String cellValue = ResponseUtils.getResultByIdOrThrow(response, id);
+
+		return defaultString(cellValue, StringUtils.EMPTY);
+	}
+
+	private int getCellNumber(String headerName) throws UIFrameworkExecutionException, UIFrameworkBuildingException {
+		String id = "getCellNumberForHeader_" + headerName;
+		builders.getElAttribute().id(id).winLocator(headerLocator.byName(headerName)).attributeName(AUTOMATION_ID_ATTRIBUTE).build();
+		RhBatchResponse response = builders.getContext().submit("getColumnNumber_" + headerName);
+		String headerWithCellNumber = ResponseUtils.getResultByIdOrThrow(response, id);
+
+		Matcher cellMatcher = CELL_INDEX_PATTERN.matcher(headerWithCellNumber);
+		if (!cellMatcher.matches())
+			return -1;
+
+		return Integer.parseInt(cellMatcher.group(1)) + 1;
 	}
 }

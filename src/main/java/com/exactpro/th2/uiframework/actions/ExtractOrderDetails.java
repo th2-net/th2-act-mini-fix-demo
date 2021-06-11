@@ -29,7 +29,7 @@ import io.grpc.stub.StreamObserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.LinkedHashMap;
+import java.util.Collections;
 import java.util.Map;
 
 public class ExtractOrderDetails extends BaseAction<ExtractOrderDetailsRequest> {
@@ -43,7 +43,7 @@ public class ExtractOrderDetails extends BaseAction<ExtractOrderDetailsRequest> 
 
 	@Override
 	protected Map<String, String> convertRequestParams(ExtractOrderDetailsRequest details) {
-		return new LinkedHashMap<>(details.getExtractionDetailsMap());
+		return Collections.singletonMap("extractedFields", details.getExtractionFieldsList().toString());
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class ExtractOrderDetails extends BaseAction<ExtractOrderDetailsRequest> 
 	@Override
 	protected void collectActions(ExtractOrderDetailsRequest request, UIFrameworkDemoContext context, ActResult result) throws UIFrameworkException {
 		OrdersGrid orders = context.getMainWindow().getOrders();
-		result.setData(orders.extractLastOrderFields(request.getExtractionDetailsMap()));
+		result.setData(orders.extractLastOrderFields(request.getExtractionFieldsList()));
 	}
 
 	@Override
