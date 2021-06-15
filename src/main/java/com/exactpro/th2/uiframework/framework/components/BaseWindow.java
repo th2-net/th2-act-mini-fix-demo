@@ -33,22 +33,22 @@ public abstract class BaseWindow<T extends BaseWindow<T>> extends WinUIElement {
 
 
 	public T init(WinLocator windowLocator) throws UIFrameworkBuildingException {
-		this.windowLocator = windowLocator;
+		this.windowLocator = findAndSaveLocators(windowLocator, "mainWindowElId", false);
 		return getWindow();
 	}
 
 	public void maximize() throws UIFrameworkBuildingException {
-		this.builders.sendText().winLocator(windowLocator.byId("MenuBar")).isDirectText(true)
+		this.builders.sendText().winLocator(windowLocator).isDirectText(true)
 				.text(UIUtils.keyCombo(SendTextExtraButtons.WINDOWS, SendTextExtraButtons.UP)).build();
 	}
 
 	public void minimize() throws UIFrameworkBuildingException {
-		this.builders.sendText().winLocator(windowLocator.byId("MenuBar")).isDirectText(true)
+		this.builders.sendText().winLocator(windowLocator).isDirectText(true)
 				.text(UIUtils.keyCombo(SendTextExtraButtons.WINDOWS, SendTextExtraButtons.DOWN)).build();
 	}
 
 	public void close() throws UIFrameworkBuildingException {
-		this.builders.sendText().winLocator(windowLocator.byId("MenuBar")).isDirectText(true)
+		this.builders.sendText().winLocator(windowLocator).isDirectText(true)
 				.text(UIUtils.keyCombo(SendTextExtraButtons.ALT, SendTextExtraButtons.F4)).build();
 	}
 
