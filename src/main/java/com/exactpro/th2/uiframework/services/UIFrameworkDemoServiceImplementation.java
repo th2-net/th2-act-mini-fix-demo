@@ -92,7 +92,12 @@ public class UIFrameworkDemoServiceImplementation extends UIFrameworkActGrpc.UIF
 	}
 
 	@Override
-	public void extractOrderDetails(ExtractOrderDetailsRequest request, StreamObserver<ActResponse> responseObserver) {
-		new ExtractOrderDetails(framework, responseObserver).run(request);
+	public void extractLastOrderDetails(ExtractLastOrderDetailsRequest request, StreamObserver<ActResponse> responseObserver) {
+		new ExtractLastOrderDetails(framework, responseObserver).run(request);
+	}
+
+	@Override
+	public void extractLastSystemMessage(BaseMessage request, StreamObserver<ActResponse> responseObserver) {
+		new ExtractLastSystemMessage(framework, responseObserver).run(request);
 	}
 }

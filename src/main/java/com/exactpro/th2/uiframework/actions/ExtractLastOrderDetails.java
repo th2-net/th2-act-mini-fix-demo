@@ -24,7 +24,7 @@ import com.exactpro.th2.uiframework.UIFrameworkDemo;
 import com.exactpro.th2.uiframework.UIFrameworkDemoContext;
 import com.exactpro.th2.uiframework.framework.components.OrdersGrid;
 import com.exactpro.th2.uiframework.grpc.ActResponse;
-import com.exactpro.th2.uiframework.grpc.ExtractOrderDetailsRequest;
+import com.exactpro.th2.uiframework.grpc.ExtractLastOrderDetailsRequest;
 import io.grpc.stub.StreamObserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,32 +32,32 @@ import org.slf4j.LoggerFactory;
 import java.util.Collections;
 import java.util.Map;
 
-public class ExtractOrderDetails extends BaseAction<ExtractOrderDetailsRequest> {
-	private static final Logger logger = LoggerFactory.getLogger(ExtractOrderDetails.class);
+public class ExtractLastOrderDetails extends BaseAction<ExtractLastOrderDetailsRequest> {
+	private static final Logger logger = LoggerFactory.getLogger(ExtractLastOrderDetails.class);
 
 
-	public ExtractOrderDetails(UIFrameworkDemo framework, StreamObserver<ActResponse> responseObserver) {
+	public ExtractLastOrderDetails(UIFrameworkDemo framework, StreamObserver<ActResponse> responseObserver) {
 		super(framework, responseObserver);
 	}
 
 
 	@Override
-	protected Map<String, String> convertRequestParams(ExtractOrderDetailsRequest details) {
+	protected Map<String, String> convertRequestParams(ExtractLastOrderDetailsRequest details) {
 		return Collections.singletonMap("extractedFields", details.getExtractionFieldsList().toString());
 	}
 
 	@Override
 	protected String getName() {
-		return "extractOrderDetails";
+		return "extractingLastOrderDetails";
 	}
 
 	@Override
-	protected RhSessionID getSessionID(ExtractOrderDetailsRequest request) {
+	protected RhSessionID getSessionID(ExtractLastOrderDetailsRequest request) {
 		return request.getBase().getSessionId();
 	}
 
 	@Override
-	protected EventID getParentEventId(ExtractOrderDetailsRequest request) {
+	protected EventID getParentEventId(ExtractLastOrderDetailsRequest request) {
 		return request.getBase().getParentEventId();
 	}
 
@@ -67,13 +67,13 @@ public class ExtractOrderDetails extends BaseAction<ExtractOrderDetailsRequest> 
 	}
 
 	@Override
-	protected void collectActions(ExtractOrderDetailsRequest request, UIFrameworkDemoContext context, ActResult result) throws UIFrameworkException {
+	protected void collectActions(ExtractLastOrderDetailsRequest request, UIFrameworkDemoContext context, ActResult result) throws UIFrameworkException {
 		OrdersGrid orders = context.getMainWindow().getOrders();
 		result.setData(orders.extractLastOrderFields(request.getExtractionFieldsList()));
 	}
 
 	@Override
 	protected String getStatusInfo() {
-		return "Order details received";
+		return "Last order details received";
 	}
 }

@@ -24,7 +24,8 @@ import com.exactpro.th2.uiframework.framework.components.tabs.TransactionTab;
 import org.apache.commons.lang3.StringUtils;
 
 public class MainWindow extends BaseWindow<MainWindow> {
-	private OrdersGrid grid;
+	private OrdersGrid ordersGrid;
+	private SystemMessagesGrid systemMessagesGrid;
 
 
 	public MainWindow(WinBuilderManager builders) {
@@ -68,11 +69,19 @@ public class MainWindow extends BaseWindow<MainWindow> {
 	}
 
 	public OrdersGrid getOrders() throws UIFrameworkBuildingException {
-		if (grid == null) {
-			grid = new OrdersGrid(builders).init(WinLocator.root().byId("39"));
+		if (ordersGrid == null) {
+			ordersGrid = new OrdersGrid(builders).init(WinLocator.root().byId("39"));
 		}
 
-		return grid;
+		return ordersGrid;
+	}
+
+	public SystemMessagesGrid getSystemMessagesGrid() {
+		if (systemMessagesGrid == null) {
+			systemMessagesGrid = new SystemMessagesGrid(builders).init(WinLocator.root().byId("23"));
+		}
+
+		return systemMessagesGrid;
 	}
 
 
