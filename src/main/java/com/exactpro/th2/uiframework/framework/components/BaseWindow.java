@@ -33,7 +33,7 @@ public abstract class BaseWindow<T extends BaseWindow<T>> extends WinUIElement {
 
 
 	public T init(WinLocator windowLocator) throws UIFrameworkBuildingException {
-		this.windowLocator = findAndSaveLocators(windowLocator, "mainWindowElId", false);
+		this.windowLocator = findAndSaveLocators(windowLocator, getWindowId(), false);
 		return getWindow();
 	}
 
