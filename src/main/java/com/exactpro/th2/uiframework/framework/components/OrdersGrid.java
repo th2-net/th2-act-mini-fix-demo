@@ -70,17 +70,17 @@ public class OrdersGrid extends WinUIElement {
 			if (cellNumber < 0)
 				continue;
 
-			result.put(headerName, extractField(rowNumber, cellNumber));
+			result.put(headerName, extractField(rowNumber, cellNumber, headerName));
 		}
 		return result;
 	}
 
 
-	private String extractField(int rowNumber, int cellNumber) throws UIFrameworkExecutionException, UIFrameworkBuildingException {
+	private String extractField(int rowNumber, int cellNumber, String headerName) throws UIFrameworkExecutionException, UIFrameworkBuildingException {
 		String id = "extractCellNameElId_" + cellNumber;
 		String cellXpath = String.format(ORDER_CELL_XPATH_FORMAT, rowNumber, cellNumber);
 		builders.getElAttribute().id(id).winLocator(gridLocator.byXpath(cellXpath)).attributeName(NAME_ATTRIBUTE).build();
-		RhBatchResponse response = builders.getContext().submit("getCellValue_" + cellNumber);
+		RhBatchResponse response = builders.getContext().submit("getCellValueFor_" + headerName);
 		String cellValue = ResponseUtils.getResultByIdOrThrow(response, id);
 
 		return defaultString(cellValue, StringUtils.EMPTY);
@@ -89,7 +89,7 @@ public class OrdersGrid extends WinUIElement {
 	private int getCellNumber(String headerName) throws UIFrameworkExecutionException, UIFrameworkBuildingException {
 		String id = "getCellNumberForHeader_" + headerName;
 		builders.getElAttribute().id(id).winLocator(headerLocator.byName(headerName)).attributeName(AUTOMATION_ID_ATTRIBUTE).build();
-		RhBatchResponse response = builders.getContext().submit("getColumnNumber_" + headerName);
+		RhBatchResponse response = builders.getContext().submit("getColumnIndexFor_" + headerName);
 		String headerWithCellNumber = ResponseUtils.getResultByIdOrThrow(response, id);
 
 		Matcher cellMatcher = CELL_INDEX_PATTERN.matcher(headerWithCellNumber);
