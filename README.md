@@ -1,4 +1,4 @@
-# TH2-Act UI framework demo
+# TH2-Act UI framework (win) demo
 
 TH2-Act UI framework demo contains a library of functions to be called from a script to automate windows Mini-FIX application.
 TH2-Act UI framework demo calls TH2-Hand to perform corresponding actions in GUI and verifies the results.
