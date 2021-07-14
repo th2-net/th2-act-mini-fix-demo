@@ -40,9 +40,9 @@ public class SystemMessagesGrid extends WinUIElement {
 
 	public String getLastSystemMessage() throws UIFrameworkBuildingException, UIFrameworkExecutionException {
 		WinLocator messageLocator = gridLocator.byXpath("/List/ListItem[last()]/Text[3]");
-		String id = "lastSystemMessageElId";
+		String id = "lastSystemMessage";
 		builders.getElAttribute().id(id).winLocator(messageLocator).attributeName("Name").build();
-		RhBatchResponse response = builders.getContext().submit("extractingLastSystemMessage");
+		RhBatchResponse response = builders.getContext().submit("extractingLastSystemMessage", true);
 		return ResponseUtils.getResultByIdOrThrow(response, id);
 	} 
 }

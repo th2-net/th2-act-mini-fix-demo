@@ -50,6 +50,10 @@ public abstract class BaseAction<T extends MessageOrBuilder> extends ActAction<T
 		return null;
 	}
 
+	protected boolean storeParentEvent() {
+		return false;
+	}
+
 	@Override
 	public void run(T request) {
 		String requestName = request.getClass().getSimpleName();
@@ -100,7 +104,7 @@ public abstract class BaseAction<T extends MessageOrBuilder> extends ActAction<T
 	private static ActResponse.ExecutionStatus convertStatus(ActResult.ActExecutionStatus status) {
 		switch (status) {
 			case SUCCESS: return ActResponse.ExecutionStatus.SUCCESS;
-			case HAND_ERROR: return ActResponse.ExecutionStatus.HAND_ERROR;
+			case HAND_INTERNAL_ERROR: return ActResponse.ExecutionStatus.HAND_ERROR;
 			case COMPILE_ERROR: return ActResponse.ExecutionStatus.COMPILE_ERROR;
 			case EXECUTION_ERROR: return ActResponse.ExecutionStatus.EXECUTION_ERROR;
 			default: return ActResponse.ExecutionStatus.ACT_ERROR;

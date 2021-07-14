@@ -40,6 +40,9 @@ public class ExtractLastOrderDetails extends BaseAction<ExtractLastOrderDetailsR
 		super(framework, responseObserver);
 	}
 
+	protected boolean storeParentEvent() {
+		return true;
+	}
 
 	@Override
 	protected Map<String, String> convertRequestParams(ExtractLastOrderDetailsRequest details) {

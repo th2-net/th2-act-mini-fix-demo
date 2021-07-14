@@ -1,15 +1,24 @@
-# TH2-Act UI framework demo
+# TH2-Act UI framework (win) demo
 
 TH2-Act UI framework demo contains a library of functions to be called from a script to automate windows Mini-FIX application.
 TH2-Act UI framework demo calls TH2-Hand to perform corresponding actions in GUI and verifies the results.
 
-### Requirements
+This project contains actions which:
+1. Opens Mini-FIX application
+2. Setting up and initializing connection to fix-server
+3. Send NewOrderSingle via application
+4. Extracting details about the last received order
+5. Extracting details about the last system message
+6. Close the connection
+7. Close the application
+
+## Requirements
 
 * JDK 11+
 * Gradle (Optional)
 * Docker
 
-### Build
+## Build
 
 This project is built by Gradle.
 You can use Gradle wrapper to build it:
@@ -22,14 +31,12 @@ e.g.
 docker build -t <image name>:<version> -f Dockerfile .
 ``` 
 
-### Configuration
+## Configuration
+This box should be configured as default act boxes.
 
-This project uses environment variables as its settings
+## Release Notes
 
-ENV VAR NAME | DEFAULT VALUE | DESCRIPTION
------------- | ------------- | -----------
-TH2_EVENT_STORAGE_GRPC_HOST | localhost | Event storage gRPC host
-TH2_EVENT_STORAGE_GRPC_PORT | 8080 | Event storage gRPC port
-HAND_GRPC_HOST | localhost | TH2-Hand gRPC host
-HAND_GRPC_PORT | 8080 | TH2-Hand gRPC port
-GRPC_PORT | 8090 | TH2-Act gRPC Server port to run on
+### 1.1.0
++ renamed project to th2-act-ui-framework-win-demo
++ updated README.MD
++ related core updates
