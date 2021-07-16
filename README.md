@@ -36,6 +36,9 @@ This box should be configured as default act boxes.
 
 ## Release Notes
 
+### 1.1.1
++ updated dependencies
+
 ### 1.1.0
 + renamed project to th2-act-ui-framework-win-demo
 + updated README.MD
