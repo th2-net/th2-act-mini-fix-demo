@@ -23,7 +23,7 @@ import com.exactpro.th2.act.grpc.hand.RhSessionID;
 import com.exactpro.th2.uiframework.UIFrameworkDemo;
 import com.exactpro.th2.uiframework.UIFrameworkDemoContext;
 import com.exactpro.th2.uiframework.UIFrameworkDemoSessionContext;
-import com.exactpro.th2.uiframework.grpc.ActResponse;
+import com.exactpro.th2.uiframework.demo.win.grpc.ActResponse;
 import com.google.protobuf.MessageOrBuilder;
 import io.grpc.stub.StreamObserver;
 import org.apache.commons.lang3.StringUtils;

@@ -21,7 +21,7 @@ import com.exactpro.th2.act.grpc.hand.RhSessionID;
 import com.exactpro.th2.act.grpc.hand.RhTargetServer;
 import com.exactpro.th2.uiframework.UIFrameworkDemo;
 import com.exactpro.th2.uiframework.actions.*;
-import com.exactpro.th2.uiframework.grpc.*;
+import com.exactpro.th2.uiframework.demo.win.grpc.*;
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
 import org.slf4j.Logger;
