@@ -64,6 +64,11 @@ public abstract class BaseAction<T extends MessageOrBuilder> extends ActAction<T
 	}
 
 	@Override
+	protected String getRequestTableHeader() {
+		return "Input parameters";
+	}
+
+	@Override
 	protected void processResult(ActResult result) throws UIFrameworkException {
 		ActResponse.Builder responseBuilder = createResponseBuilder();
 		responseBuilder.setSessionID(createOrGetSessionId(result))

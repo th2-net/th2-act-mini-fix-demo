@@ -67,6 +67,11 @@ public class ExtractLastSystemMessage extends BaseAction<BaseMessage> {
 	}
 
 	@Override
+	protected String getDescription() {
+		return "Extracting from MiniFix application displayed raw fix message";
+	}
+
+	@Override
 	protected String getStatusInfo() {
 		return "Last system message extracted";
 	}

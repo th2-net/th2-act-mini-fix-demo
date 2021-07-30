@@ -101,6 +101,11 @@ public class SendNewOrderSingle extends BaseAction<SendNewOrderSingleRequest> {
 	}
 
 	@Override
+	protected String getDescription() {
+		return "Sending NewOrderSingle via MiniFix application";
+	}
+
+	@Override
 	protected String getStatusInfo() {
 		return "Order has been sent";
 	}

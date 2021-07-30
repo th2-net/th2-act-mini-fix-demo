@@ -18,13 +18,14 @@ package com.exactpro.th2.uiframework;
 
 import com.exactpro.th2.act.framework.HandExecutor;
 import com.exactpro.th2.act.framework.UIFrameworkContext;
+import com.exactpro.th2.act.framework.UIWinFrameworkContext;
 import com.exactpro.th2.act.framework.builders.win.WinBuilderManager;
 import com.exactpro.th2.act.grpc.hand.RhSessionID;
 import com.exactpro.th2.uiframework.framework.components.MainWindow;
 
-public class UIFrameworkDemoContext extends UIFrameworkContext {
+public class UIFrameworkDemoContext extends UIWinFrameworkContext {
+	
 	private MainWindow mainWindow;
-
 
 	public UIFrameworkDemoContext(RhSessionID sessionID, HandExecutor handExecutor) {
 		super(sessionID, handExecutor);

@@ -76,6 +76,11 @@ public class ExtractLastOrderDetails extends BaseAction<ExtractLastOrderDetailsR
 	}
 
 	@Override
+	protected String getDescription() {
+		return "Extracting from MiniFix application parsed fields of received message from table";
+	}
+
+	@Override
 	protected String getStatusInfo() {
 		return "Last order details received";
 	}
