@@ -60,6 +60,7 @@ public class SendNewOrderSingle extends BaseAction<SendNewOrderSingleRequest> {
 			} else {
 				int index = 2;
 				String newInd;
+				//if this tag number already exists in maps params, search unique postfix to keep all values in map.
 				//noinspection StatementWithEmptyBody
 				while (params.containsKey(newInd = tagNumber + " [" + index++ + "]"));
 				params.put(newInd, tags.getTagValue());
