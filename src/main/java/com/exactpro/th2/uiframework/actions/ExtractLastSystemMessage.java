@@ -23,8 +23,8 @@ import com.exactpro.th2.common.grpc.EventID;
 import com.exactpro.th2.uiframework.UIFrameworkDemo;
 import com.exactpro.th2.uiframework.UIFrameworkDemoContext;
 import com.exactpro.th2.uiframework.framework.components.SystemMessagesGrid;
-import com.exactpro.th2.uiframework.grpc.ActResponse;
-import com.exactpro.th2.uiframework.grpc.BaseMessage;
+import com.exactpro.th2.uiframework.demo.win.grpc.ActResponse;
+import com.exactpro.th2.uiframework.demo.win.grpc.BaseMessage;
 import io.grpc.stub.StreamObserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,6 +64,11 @@ public class ExtractLastSystemMessage extends BaseAction<BaseMessage> {
 	protected void collectActions(BaseMessage request, UIFrameworkDemoContext context, ActResult result) throws UIFrameworkException {
 		SystemMessagesGrid grid = context.getMainWindow().getSystemMessagesGrid();
 		result.setData(Collections.singletonMap("lastSystemMessage", grid.getLastSystemMessage()));
+	}
+
+	@Override
+	protected String getDescription() {
+		return "Extracting from MiniFix application displayed raw fix message";
 	}
 
 	@Override

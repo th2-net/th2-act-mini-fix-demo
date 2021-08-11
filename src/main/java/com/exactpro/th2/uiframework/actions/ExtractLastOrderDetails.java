@@ -23,8 +23,8 @@ import com.exactpro.th2.common.grpc.EventID;
 import com.exactpro.th2.uiframework.UIFrameworkDemo;
 import com.exactpro.th2.uiframework.UIFrameworkDemoContext;
 import com.exactpro.th2.uiframework.framework.components.OrdersGrid;
-import com.exactpro.th2.uiframework.grpc.ActResponse;
-import com.exactpro.th2.uiframework.grpc.ExtractLastOrderDetailsRequest;
+import com.exactpro.th2.uiframework.demo.win.grpc.ActResponse;
+import com.exactpro.th2.uiframework.demo.win.grpc.ExtractLastOrderDetailsRequest;
 import io.grpc.stub.StreamObserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,6 +73,11 @@ public class ExtractLastOrderDetails extends BaseAction<ExtractLastOrderDetailsR
 	protected void collectActions(ExtractLastOrderDetailsRequest request, UIFrameworkDemoContext context, ActResult result) throws UIFrameworkException {
 		OrdersGrid orders = context.getMainWindow().getOrders();
 		result.setData(orders.extractLastOrderFields(request.getExtractionFieldsList()));
+	}
+
+	@Override
+	protected String getDescription() {
+		return "Extracting from MiniFix application parsed fields of received message from table";
 	}
 
 	@Override

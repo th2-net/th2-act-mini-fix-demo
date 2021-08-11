@@ -23,15 +23,18 @@ import com.exactpro.th2.common.grpc.EventID;
 import com.exactpro.th2.uiframework.UIFrameworkDemo;
 import com.exactpro.th2.uiframework.UIFrameworkDemoContext;
 import com.exactpro.th2.uiframework.framework.components.MainWindow;
-import com.exactpro.th2.uiframework.framework.components.tabs.TransactionTab;
-import com.exactpro.th2.uiframework.grpc.ActResponse;
-import com.exactpro.th2.uiframework.grpc.SendNewOrderSingleRequest;
+import com.exactpro.th2.uiframework.demo.win.grpc.ActResponse;
+import com.exactpro.th2.uiframework.demo.win.grpc.SendNewOrderSingleRequest;
 import io.grpc.stub.StreamObserver;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class SendNewOrderSingle extends BaseAction<SendNewOrderSingleRequest> {
 	private static final Logger logger = LoggerFactory.getLogger(SendNewOrderSingle.class);
@@ -49,10 +52,21 @@ public class SendNewOrderSingle extends BaseAction<SendNewOrderSingleRequest> {
 
 	@Override
 	protected Map<String, String> convertRequestParams(SendNewOrderSingleRequest request) {
-		if (request.getToggleTagsCount() > 0) {
-			return Collections.singletonMap("toggledTags", request.getToggleTagsList().toString());
+		Map<String, String> params = new LinkedHashMap<>();
+		for (SendNewOrderSingleRequest.Tags tags : request.getTagsList()) {
+			var tagNumber = tags.getTagNumber();
+			if (!params.containsKey(tagNumber)) {
+				params.put(tagNumber, tags.getTagValue());
+			} else {
+				int index = 2;
+				String newInd;
+				//if this tag number already exists in maps params, search unique postfix to keep all values in map.
+				//noinspection StatementWithEmptyBody
+				while (params.containsKey(newInd = tagNumber + " [" + index++ + "]"));
+				params.put(newInd, tags.getTagValue());
+			}
 		}
-		return null;
+		return params;
 	}
 
 	@Override
@@ -73,10 +87,23 @@ public class SendNewOrderSingle extends BaseAction<SendNewOrderSingleRequest> {
 	@Override
 	protected void collectActions(SendNewOrderSingleRequest request, UIFrameworkDemoContext context, ActResult result) throws UIFrameworkException {
 		MainWindow mainWindow = context.getMainWindow();
-		TransactionTab transactionTab = mainWindow.openTransactionsTab();
-		transactionTab.selectNewOrderSingleTransaction();
-		transactionTab.toggleTags(request.getToggleTagsList());
+		var transactionTab = mainWindow.openTransactionsTab();
+		var transactionName = "DemoTransaction";
+		transactionTab.createTransaction(transactionName);
+		transactionTab.selectTransaction(transactionName);
+		transactionTab.setTags(convertTags(request));
 		transactionTab.send();
+		transactionTab.deleteTransaction(transactionName);
+	}
+	
+	private List<Pair<String, String>> convertTags(SendNewOrderSingleRequest request) {
+		return request.getTagsList().stream().map(tags -> new ImmutablePair<>(tags.getTagNumber(), tags.getTagValue()))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	protected String getDescription() {
+		return "Sending NewOrderSingle via MiniFix application";
 	}
 
 	@Override
