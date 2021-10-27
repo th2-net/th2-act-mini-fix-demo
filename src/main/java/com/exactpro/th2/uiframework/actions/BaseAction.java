@@ -76,6 +76,8 @@ public abstract class BaseAction<T extends MessageOrBuilder> extends ActAction<T
 		addIfNotEmpty(result.getErrorInfo(), responseBuilder::setErrorInfo);
 		addIfNotEmpty(result.getStatusInfo(), responseBuilder::setStatusInfo);
 		addIfNotEmpty(result.getData(), responseBuilder::putAllData);
+		addIfNotEmpty(result.getExecutionId(), responseBuilder::setExecutionId);
+		responseBuilder.setMessageType(result.getMessageType());
 		responseObserver.onNext(responseBuilder.build());
 		responseObserver.onCompleted();
 	}
