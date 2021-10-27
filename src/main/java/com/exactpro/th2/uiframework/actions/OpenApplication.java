@@ -22,6 +22,7 @@ import com.exactpro.th2.act.framework.builders.win.WinLocator;
 import com.exactpro.th2.act.framework.exceptions.UIFrameworkException;
 import com.exactpro.th2.act.grpc.hand.RhSessionID;
 import com.exactpro.th2.common.grpc.EventID;
+import com.exactpro.th2.uiframework.CustomActResult;
 import com.exactpro.th2.uiframework.UIFrameworkDemo;
 import com.exactpro.th2.uiframework.UIFrameworkDemoContext;
 import com.exactpro.th2.uiframework.framework.components.MainWindow;
@@ -71,7 +72,7 @@ public class OpenApplication extends BaseAction<OpenApplicationRequest> {
 	}
 
 	@Override
-	protected void collectActions(OpenApplicationRequest request, UIFrameworkDemoContext context, ActResult result) throws UIFrameworkException {
+	protected void collectActions(OpenApplicationRequest request, UIFrameworkDemoContext context, CustomActResult result) throws UIFrameworkException {
 		WinBuilderManager builderManager = context.createBuilderManager();
 		builderManager.openWindow().workDir(request.getWorkDir()).appFile(request.getAppFile()).build();
 		MainWindow mainWindow = new MainWindow(builderManager).init(WinLocator.root());

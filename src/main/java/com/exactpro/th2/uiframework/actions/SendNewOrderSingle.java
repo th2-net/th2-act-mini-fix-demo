@@ -20,6 +20,7 @@ import com.exactpro.th2.act.ActResult;
 import com.exactpro.th2.act.framework.exceptions.UIFrameworkException;
 import com.exactpro.th2.act.grpc.hand.RhSessionID;
 import com.exactpro.th2.common.grpc.EventID;
+import com.exactpro.th2.uiframework.CustomActResult;
 import com.exactpro.th2.uiframework.UIFrameworkDemo;
 import com.exactpro.th2.uiframework.UIFrameworkDemoContext;
 import com.exactpro.th2.uiframework.framework.components.MainWindow;
@@ -85,7 +86,7 @@ public class SendNewOrderSingle extends BaseAction<SendNewOrderSingleRequest> {
 	}
 
 	@Override
-	protected void collectActions(SendNewOrderSingleRequest request, UIFrameworkDemoContext context, ActResult result) throws UIFrameworkException {
+	protected void collectActions(SendNewOrderSingleRequest request, UIFrameworkDemoContext context, CustomActResult result) throws UIFrameworkException {
 		MainWindow mainWindow = context.getMainWindow();
 		var transactionTab = mainWindow.openTransactionsTab();
 		var transactionName = "DemoTransaction";
