@@ -16,6 +16,7 @@
 
 package com.exactpro.th2.uiframework.framework.components;
 
+import com.exactpro.th2.act.framework.ExecutionParams;
 import com.exactpro.th2.act.framework.builders.win.WinBuilderManager;
 import com.exactpro.th2.act.framework.builders.win.WinLocator;
 import com.exactpro.th2.act.framework.exceptions.UIFrameworkBuildingException;
@@ -80,7 +81,10 @@ public class OrdersGrid extends WinUIElement {
 		String id = "extractCellNameElId_" + cellNumber;
 		String cellXpath = String.format(ORDER_CELL_XPATH_FORMAT, rowNumber, cellNumber);
 		builders.getElAttribute().id(id).winLocator(gridLocator.byXpath(cellXpath)).attributeName(NAME_ATTRIBUTE).build();
-		RhBatchResponse response = builders.getContext().submit("getCellValueFor_" + headerName);
+		ExecutionParams executionParams = ExecutionParams.builder()
+				.setEventName("getCellValueFor_" + headerName)
+				.build();
+		RhBatchResponse response = builders.getContext().submit(executionParams);
 		String cellValue = ResponseUtils.getResultByIdOrThrow(response, id);
 
 		return defaultString(cellValue, StringUtils.EMPTY);
@@ -89,7 +93,10 @@ public class OrdersGrid extends WinUIElement {
 	private int getCellNumber(String headerName) throws UIFrameworkExecutionException, UIFrameworkBuildingException {
 		String id = "getCellNumberForHeader_" + headerName;
 		builders.getElAttribute().id(id).winLocator(headerLocator.byName(headerName)).attributeName(AUTOMATION_ID_ATTRIBUTE).build();
-		RhBatchResponse response = builders.getContext().submit("getColumnIndexFor_" + headerName);
+		ExecutionParams executionParams = ExecutionParams.builder()
+				.setEventName("getColumnIndexFor_" + headerName)
+				.build();
+		RhBatchResponse response = builders.getContext().submit(executionParams);
 		String headerWithCellNumber = ResponseUtils.getResultByIdOrThrow(response, id);
 
 		Matcher cellMatcher = CELL_INDEX_PATTERN.matcher(headerWithCellNumber);

@@ -36,6 +36,11 @@ This box should be configured as default act boxes.
 
 ## Release Notes
 
+#### 1.2.1
++ Migrated `act-gui-core` version from `2.5.0` to `2.6.0`
+  + Added the ability to configure execution params
++ Migrated `grpc-hand` version from `2.8.0` to `2.9.0`
+
 ### 1.1.1
 + updated dependencies
 

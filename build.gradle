@@ -48,8 +48,8 @@ dependencies {
 
     implementation 'com.exactpro.th2:common:3.13.4'
     implementation 'com.exactpro.th2:grpc-common:3.1.2'
-    implementation "com.exactpro.th2:grpc-hand:2.8.0"
-    implementation "com.exactpro.th2:act-gui-core:2.5.0"
+    implementation "com.exactpro.th2:grpc-hand:2.9.0"
+    implementation "com.exactpro.th2:act-gui-core:2.6.0-TH2-2308-1389559231-SNAPSHOT"
     implementation "com.exactpro.th2:grpc-act-uiframework-win-demo:1.1.0"
 
     implementation "org.apache.commons:commons-csv:1.8"
