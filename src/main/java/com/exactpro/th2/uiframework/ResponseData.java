@@ -20,20 +20,18 @@ import com.exactpro.th2.act.framework.InternalMessageType;
 
 public class ResponseData {
 	private String value;
-	private String executionId;
 	private InternalMessageType type = InternalMessageType.PLAIN_STRING;
 
 	public ResponseData() {
 	}
 
 
-	public ResponseData(String data, String executionId) {
-		this(data, executionId, InternalMessageType.PLAIN_STRING);
+	public ResponseData(String data) {
+		this(data, InternalMessageType.PLAIN_STRING);
 	}
 
-	public ResponseData(String data, String executionId, InternalMessageType type) {
+	public ResponseData(String data, InternalMessageType type) {
 		this.value = data;
-		this.executionId = executionId;
 		this.type = type;
 	}
 
@@ -51,13 +49,5 @@ public class ResponseData {
 
 	public void setType(InternalMessageType type) {
 		this.type = type;
-	}
-
-	public String getExecutionId() {
-		return executionId;
-	}
-
-	public void setExecutionId(String executionId) {
-		this.executionId = executionId;
 	}
 }

@@ -25,7 +25,7 @@ public class ResponseUtils {
 	public static ResponseData getResultByIdOrThrow(RhBatchResponse response, String id) throws UIFrameworkExecutionException {
 		return response.getResultList().stream()
 				.filter(r -> r.getActionId().equals(id))
-				.map(r -> new ResponseData(r.getResult(), response.getExecutionId(), InternalMessageType.convert(response.getMessageType())))
+				.map(r -> new ResponseData(r.getResult(), InternalMessageType.convert(response.getMessageType())))
 				.findFirst()
 				.orElseThrow(() -> new UIFrameworkExecutionException("Unexpected response from hand"));
 	}

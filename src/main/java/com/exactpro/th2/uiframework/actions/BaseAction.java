@@ -83,6 +83,7 @@ public abstract class BaseAction<T extends MessageOrBuilder> extends Action<T, U
 				.setScriptStatus(convertStatus(result.getScriptStatus()));
 		addIfNotEmpty(result.getErrorInfo(), responseBuilder::setErrorInfo);
 		addIfNotEmpty(result.getStatusInfo(), responseBuilder::setStatusInfo);
+		addIfNotEmpty(result.getExecutionId(), responseBuilder::setExecutionId);
 		responseBuilder.putAllData(createResponseData(result.getData()));
 		responseObserver.onNext(responseBuilder.build());
 		responseObserver.onCompleted();
@@ -132,7 +133,6 @@ public abstract class BaseAction<T extends MessageOrBuilder> extends Action<T, U
 		data.forEach((key, responseData) -> {
 			var actResponse = ActResponse.ResponseData.newBuilder()
 					.setMessageType(responseData.getType().getType())
-					.setExecutionId(responseData.getExecutionId())
 					.setValue(responseData.getValue())
 					.build();
 			result.put(key, actResponse);
