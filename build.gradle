@@ -46,11 +46,11 @@ artifactoryPublish.skip = true
 dependencies {
     api platform('com.exactpro.th2:bom:3.0.0')
 
-    implementation 'com.exactpro.th2:common:3.13.4'
-    implementation 'com.exactpro.th2:grpc-common:3.1.2'
-    implementation "com.exactpro.th2:grpc-hand:2.9.0"
-    implementation "com.exactpro.th2:act-gui-core:2.6.0-TH2-2308-1393577631-SNAPSHOT"
-    implementation "com.exactpro.th2:grpc-act-uiframework-win-demo:1.2.0-TH2-2308_master-1393424235-SNAPSHOT"
+    implementation 'com.exactpro.th2:common:3.31.1'
+    implementation 'com.exactpro.th2:grpc-common:3.8.0'
+    implementation "com.exactpro.th2:grpc-hand:2.10.0"
+    implementation "com.exactpro.th2:act-gui-core:2.6.0-TH2-2308-2179512756-SNAPSHOT"
+    implementation "com.exactpro.th2:grpc-act-uiframework-win-demo:1.2.0"
 
     implementation "org.apache.commons:commons-csv:1.8"
 
