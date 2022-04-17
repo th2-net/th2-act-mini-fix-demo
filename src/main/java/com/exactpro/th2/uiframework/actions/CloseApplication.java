@@ -20,6 +20,7 @@ import com.exactpro.th2.act.ActResult;
 import com.exactpro.th2.act.framework.exceptions.UIFrameworkException;
 import com.exactpro.th2.act.grpc.hand.RhSessionID;
 import com.exactpro.th2.common.grpc.EventID;
+import com.exactpro.th2.uiframework.CustomActResult;
 import com.exactpro.th2.uiframework.UIFrameworkDemo;
 import com.exactpro.th2.uiframework.UIFrameworkDemoContext;
 import com.exactpro.th2.uiframework.demo.win.grpc.ActResponse;
@@ -58,7 +59,7 @@ public class CloseApplication extends BaseAction<BaseMessage> {
 	}
 
 	@Override
-	protected void collectActions(BaseMessage request, UIFrameworkDemoContext context, ActResult result) throws UIFrameworkException {
+	protected void collectActions(BaseMessage request, UIFrameworkDemoContext context, CustomActResult result) throws UIFrameworkException {
 		context.getMainWindow().close();
 	}
 

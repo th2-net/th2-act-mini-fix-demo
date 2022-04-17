@@ -16,14 +16,15 @@
 
 package com.exactpro.th2.uiframework.framework.components;
 
+import com.exactpro.th2.act.framework.ExecutionParams;
 import com.exactpro.th2.act.framework.builders.win.WinBuilderManager;
 import com.exactpro.th2.act.framework.builders.win.WinLocator;
 import com.exactpro.th2.act.framework.exceptions.UIFrameworkBuildingException;
 import com.exactpro.th2.act.framework.exceptions.UIFrameworkExecutionException;
 import com.exactpro.th2.act.framework.ui.WinUIElement;
 import com.exactpro.th2.act.grpc.hand.RhBatchResponse;
+import com.exactpro.th2.uiframework.ResponseData;
 import com.exactpro.th2.uiframework.framework.utils.ResponseUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,8 +32,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static org.apache.commons.lang3.StringUtils.defaultString;
 
 public class OrdersGrid extends WinUIElement {
 	private static final String NAME_ATTRIBUTE = "Name";
@@ -56,15 +55,15 @@ public class OrdersGrid extends WinUIElement {
 		return this;
 	}
 
-	public Map<String, String> extractLastOrderFields(List<String> extractionFields) throws UIFrameworkBuildingException, UIFrameworkExecutionException {
+	public Map<String, ResponseData> extractLastOrderFields(List<String> extractionFields) throws UIFrameworkBuildingException, UIFrameworkExecutionException {
 		return extractOrderFields(extractionFields, 1);
 	}
 
-	public Map<String, String> extractOrderFields(List<String> extractionFields, int rowNumber) throws UIFrameworkExecutionException, UIFrameworkBuildingException {
+	public Map<String, ResponseData> extractOrderFields(List<String> extractionFields, int rowNumber) throws UIFrameworkExecutionException, UIFrameworkBuildingException {
 		if (rowNumber < 0)
 			return Collections.emptyMap();
 
-		Map<String, String> result = new HashMap<>(extractionFields.size());
+		Map<String, ResponseData> result = new HashMap<>(extractionFields.size());
 		for (String headerName : extractionFields) {
 			int cellNumber = getCellNumber(headerName);
 			if (cellNumber < 0)
@@ -76,23 +75,27 @@ public class OrdersGrid extends WinUIElement {
 	}
 
 
-	private String extractField(int rowNumber, int cellNumber, String headerName) throws UIFrameworkExecutionException, UIFrameworkBuildingException {
+	private ResponseData extractField(int rowNumber, int cellNumber, String headerName) throws UIFrameworkExecutionException, UIFrameworkBuildingException {
 		String id = "extractCellNameElId_" + cellNumber;
 		String cellXpath = String.format(ORDER_CELL_XPATH_FORMAT, rowNumber, cellNumber);
 		builders.getElAttribute().id(id).winLocator(gridLocator.byXpath(cellXpath)).attributeName(NAME_ATTRIBUTE).build();
-		RhBatchResponse response = builders.getContext().submit("getCellValueFor_" + headerName);
-		String cellValue = ResponseUtils.getResultByIdOrThrow(response, id);
-
-		return defaultString(cellValue, StringUtils.EMPTY);
+		ExecutionParams executionParams = ExecutionParams.builder()
+				.setEventName("getCellValueFor_" + headerName)
+				.build();
+		RhBatchResponse response = builders.getContext().submit(executionParams);
+		return ResponseUtils.getResultByIdOrThrow(response, id);
 	}
 
 	private int getCellNumber(String headerName) throws UIFrameworkExecutionException, UIFrameworkBuildingException {
 		String id = "getCellNumberForHeader_" + headerName;
 		builders.getElAttribute().id(id).winLocator(headerLocator.byName(headerName)).attributeName(AUTOMATION_ID_ATTRIBUTE).build();
-		RhBatchResponse response = builders.getContext().submit("getColumnIndexFor_" + headerName);
-		String headerWithCellNumber = ResponseUtils.getResultByIdOrThrow(response, id);
+		ExecutionParams executionParams = ExecutionParams.builder()
+				.setEventName("getColumnIndexFor_" + headerName)
+				.build();
+		RhBatchResponse response = builders.getContext().submit(executionParams);
+		ResponseData headerWithCellNumber = ResponseUtils.getResultByIdOrThrow(response, id);
 
-		Matcher cellMatcher = CELL_INDEX_PATTERN.matcher(headerWithCellNumber);
+		Matcher cellMatcher = CELL_INDEX_PATTERN.matcher(headerWithCellNumber.getValue());
 		if (!cellMatcher.matches())
 			return -1;
 

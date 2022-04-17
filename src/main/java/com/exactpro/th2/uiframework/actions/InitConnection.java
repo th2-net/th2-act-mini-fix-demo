@@ -21,6 +21,7 @@ import com.exactpro.th2.act.framework.exceptions.UIFrameworkBuildingException;
 import com.exactpro.th2.act.framework.exceptions.UIFrameworkException;
 import com.exactpro.th2.act.grpc.hand.RhSessionID;
 import com.exactpro.th2.common.grpc.EventID;
+import com.exactpro.th2.uiframework.CustomActResult;
 import com.exactpro.th2.uiframework.UIFrameworkDemo;
 import com.exactpro.th2.uiframework.UIFrameworkDemoContext;
 import com.exactpro.th2.uiframework.framework.components.MainWindow;
@@ -71,7 +72,7 @@ public class InitConnection extends BaseAction<InitConnectionRequest> {
 	}
 
 	@Override
-	protected void collectActions(InitConnectionRequest request, UIFrameworkDemoContext context, ActResult result) throws UIFrameworkException {
+	protected void collectActions(InitConnectionRequest request, UIFrameworkDemoContext context, CustomActResult result) throws UIFrameworkException {
 		MainWindow mainWindow = context.getMainWindow();
 		processSessionSettings(mainWindow, request.getSessionSettings());
 		mainWindow.connect(request.getHost(), request.getPort());

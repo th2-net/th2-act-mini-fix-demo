@@ -16,15 +16,17 @@
 
 package com.exactpro.th2.uiframework.framework.utils;
 
+import com.exactpro.th2.act.framework.InternalMessageType;
 import com.exactpro.th2.act.framework.exceptions.UIFrameworkExecutionException;
 import com.exactpro.th2.act.grpc.hand.RhBatchResponse;
+import com.exactpro.th2.uiframework.ResponseData;
 
 public class ResponseUtils {
-	public static String getResultByIdOrThrow(RhBatchResponse response, String id) throws UIFrameworkExecutionException {
+	public static ResponseData getResultByIdOrThrow(RhBatchResponse response, String id) throws UIFrameworkExecutionException {
 		return response.getResultList().stream()
 				.filter(r -> r.getActionId().equals(id))
+				.map(r -> new ResponseData(r.getResult(), InternalMessageType.convert(response.getMessageType())))
 				.findFirst()
-				.orElseThrow(() -> new UIFrameworkExecutionException("Unexpected response from hand"))
-				.getResult();
+				.orElseThrow(() -> new UIFrameworkExecutionException("Unexpected response from hand"));
 	}
 }

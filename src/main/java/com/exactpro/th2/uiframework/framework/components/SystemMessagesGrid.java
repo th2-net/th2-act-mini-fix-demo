@@ -16,12 +16,15 @@
 
 package com.exactpro.th2.uiframework.framework.components;
 
+import com.exactpro.th2.act.framework.ExecutionParams;
+import com.exactpro.th2.act.framework.InternalMessageType;
 import com.exactpro.th2.act.framework.builders.win.WinBuilderManager;
 import com.exactpro.th2.act.framework.builders.win.WinLocator;
 import com.exactpro.th2.act.framework.exceptions.UIFrameworkBuildingException;
 import com.exactpro.th2.act.framework.exceptions.UIFrameworkExecutionException;
 import com.exactpro.th2.act.framework.ui.WinUIElement;
 import com.exactpro.th2.act.grpc.hand.RhBatchResponse;
+import com.exactpro.th2.uiframework.ResponseData;
 import com.exactpro.th2.uiframework.framework.utils.ResponseUtils;
 
 public class SystemMessagesGrid extends WinUIElement {
@@ -38,11 +41,16 @@ public class SystemMessagesGrid extends WinUIElement {
 		return this;
 	}
 
-	public String getLastSystemMessage() throws UIFrameworkBuildingException, UIFrameworkExecutionException {
+	public ResponseData getLastSystemMessage() throws UIFrameworkBuildingException, UIFrameworkExecutionException {
 		WinLocator messageLocator = gridLocator.byXpath("/List/ListItem[last()]/Text[3]");
 		String id = "lastSystemMessage";
 		builders.getElAttribute().id(id).winLocator(messageLocator).attributeName("Name").build();
-		RhBatchResponse response = builders.getContext().submit("extractingLastSystemMessage", true);
+		ExecutionParams executionParams = ExecutionParams.builder()
+				.setEventName("extractingLastSystemMessage")
+				.setStoreActionMessages(true)
+				.setMessageType(InternalMessageType.FIX)
+				.build();
+		RhBatchResponse response = builders.getContext().submit(executionParams);
 		return ResponseUtils.getResultByIdOrThrow(response, id);
 	} 
 }

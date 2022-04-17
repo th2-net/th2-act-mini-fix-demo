@@ -20,6 +20,7 @@ import com.exactpro.th2.act.ActResult;
 import com.exactpro.th2.act.framework.exceptions.UIFrameworkException;
 import com.exactpro.th2.act.grpc.hand.RhSessionID;
 import com.exactpro.th2.common.grpc.EventID;
+import com.exactpro.th2.uiframework.CustomActResult;
 import com.exactpro.th2.uiframework.UIFrameworkDemo;
 import com.exactpro.th2.uiframework.UIFrameworkDemoContext;
 import com.exactpro.th2.uiframework.framework.components.OrdersGrid;
@@ -70,7 +71,7 @@ public class ExtractLastOrderDetails extends BaseAction<ExtractLastOrderDetailsR
 	}
 
 	@Override
-	protected void collectActions(ExtractLastOrderDetailsRequest request, UIFrameworkDemoContext context, ActResult result) throws UIFrameworkException {
+	protected void collectActions(ExtractLastOrderDetailsRequest request, UIFrameworkDemoContext context, CustomActResult result) throws UIFrameworkException {
 		OrdersGrid orders = context.getMainWindow().getOrders();
 		result.setData(orders.extractLastOrderFields(request.getExtractionFieldsList()));
 	}
