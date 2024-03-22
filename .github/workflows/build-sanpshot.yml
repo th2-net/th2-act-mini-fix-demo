@@ -11,8 +11,7 @@ on:
 
 jobs:
   build-job:
-    permissions:
-      packages: write
+    permissions: read-all|write-all
     uses: th2-net/.github/.github/workflows/compound-java-dev.yml@main
     with:
       build-target: 'Docker'
