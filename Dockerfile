@@ -17,9 +17,7 @@ FROM gradle:7.6-jdk11 AS build
 ARG release_version
 ARG vcs_url
 COPY ./ .
-RUN gradle --no-daemon clean build dockerPrepare \
-    -Prelease_version=${release_version} \
-    -Pvcs_url=${vcs_url}
+RUN gradle --no-daemon clean build dockerPrepare -Prelease_version=${release_version} -Pvcs_url=${vcs_url}
 
 FROM adoptopenjdk/openjdk11:alpine
 ENV GRPC_PORT=8080 \
