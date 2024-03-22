@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2021 Exactpro (Exactpro Systems Limited)
+ * Copyright 2020-2024 Exactpro (Exactpro Systems Limited)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,10 +29,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static org.apache.commons.lang3.StringUtils.defaultString;
 
 public class OrdersGrid extends WinUIElement {
 	private static final String NAME_ATTRIBUTE = "Name";
@@ -83,7 +82,7 @@ public class OrdersGrid extends WinUIElement {
 		RhBatchResponse response = builders.getContext().submit("getCellValueFor_" + headerName);
 		String cellValue = ResponseUtils.getResultByIdOrThrow(response, id);
 
-		return defaultString(cellValue, StringUtils.EMPTY);
+		return Objects.toString(cellValue, StringUtils.EMPTY);
 	}
 
 	private int getCellNumber(String headerName) throws UIFrameworkExecutionException, UIFrameworkBuildingException {
