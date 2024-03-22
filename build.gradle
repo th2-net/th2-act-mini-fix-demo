@@ -1,11 +1,9 @@
 plugins {
-    id 'com.palantir.docker' version '0.25.0' apply false
+    id 'application'
+    id 'java'
+    id 'java-library'
+    id 'com.palantir.docker' version '0.34.0'
 }
-
-apply plugin: 'application'
-apply plugin: 'com.palantir.docker'
-apply plugin: 'java'
-apply plugin: 'java-library'
 
 ext {
     sharedDir = file("${project.rootDir}/shared")
@@ -38,8 +36,6 @@ repositories {
         resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
     }
 }
-
-artifactoryPublish.skip = true
 
 dependencies {
     api platform('com.exactpro.th2:bom:4.6.0')
