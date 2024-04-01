@@ -45,7 +45,7 @@ This box should be configured as default act boxes.
 + common: `5.10.0-dev`
 + act-gui-core: `3.0.0-dev`
 + grpc-common `4.4.0-dev`
-+ grpc-act-gui-quod: `2.0.0`
++ grpc-act-uiframework-win-demo: `1.3.0`
 + grpc-hand: `3.0.0-dev`
 
 ### 1.1.1
