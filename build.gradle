@@ -43,7 +43,7 @@ dependencies {
     implementation "com.exactpro.th2:common:5.10.0-dev"
     implementation "com.exactpro.th2:grpc-common:4.4.0-dev"
     implementation "com.exactpro.th2:grpc-hand:3.0.0-RM-84612-+"
-    implementation "com.exactpro.th2:hand:5.0.0-RM-84612-no-log4j-8505386868-4601a49-SNAPSHOT"
+    implementation "com.exactpro.th2:hand:5.0.0-RM-84612-no-log4j-8506423826-21dd3f8-SNAPSHOT"
     implementation "com.exactpro.th2:act-gui-core:3.0.0-RM-84612-8479410336-ceca9b5-SNAPSHOT"
     implementation "com.exactpro.th2:grpc-act-uiframework-win-demo:1.3.0-RM-84612-8383647500-b699975-SNAPSHOT"
 
