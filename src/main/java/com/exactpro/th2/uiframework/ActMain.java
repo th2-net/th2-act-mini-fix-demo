@@ -60,8 +60,10 @@ public class ActMain {
 			UIFrameworkDemo framework = new UIFrameworkDemo(connections);
 
 			final ActServer actServer = new ActServer(grpcRouter.startServer(createService(framework)));
-			resources.add(actServer::stop);
-			resources.add(actServer::blockUntilShutdown);
+			resources.add(() -> {
+				actServer.stop();
+				actServer.blockUntilShutdown();
+			});
 			addShutdownHook(resources);
 		}
 		catch (Exception e) {
