@@ -20,7 +20,7 @@ import com.exactpro.th2.act.ActConnections;
 import com.exactpro.th2.act.ActServer;
 import com.exactpro.th2.common.schema.factory.CommonFactory;
 import com.exactpro.th2.common.schema.grpc.router.GrpcRouter;
-import com.exactpro.th2.hand.Config;
+import com.exactpro.th2.hand.Context;
 import com.exactpro.th2.hand.services.HandBaseService;
 import com.exactpro.th2.hand.services.MessageHandler;
 import com.exactpro.th2.uiframework.configuration.UIFrameworkDemoConfigurations;
@@ -47,7 +47,7 @@ public class ActMain {
 			ActConnections<UIFrameworkDemoConfigurations> connections;
 			if (embeddedHandConfig != null) {
 				logger.info("Use embedded hand with config {}", embeddedHandConfig);
-				MessageHandler messageHandler = new MessageHandler(new Config(factory, embeddedHandConfig));
+				MessageHandler messageHandler = new MessageHandler(new Context(factory, embeddedHandConfig));
 				resources.add(messageHandler);
 				connections = new UIFrameworkDemoActConnections(factory, () -> {
 					HandBaseService service = new HandBaseService();

@@ -2,11 +2,7 @@ plugins {
     id 'application'
     id 'java'
     id 'java-library'
-    id 'com.palantir.docker' version '0.25.0'
-}
-
-ext {
-    sharedDir = file("${project.rootDir}/shared")
+    id 'com.palantir.docker' version '0.36.0'
 }
 
 group = 'com.exactpro.th2'
@@ -16,10 +12,6 @@ sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
 repositories {
-    maven {
-        name 'MavenLocal'
-        url sharedDir
-    }
     mavenCentral()
     maven {
         name 'Sonatype_snapshots'
@@ -42,10 +34,10 @@ dependencies {
 
     implementation "com.exactpro.th2:common:5.10.0-dev"
     implementation "com.exactpro.th2:grpc-common:4.4.0-dev"
-    implementation "com.exactpro.th2:grpc-hand:3.0.0-RM-84612-+"
-    implementation "com.exactpro.th2:hand:5.0.0-RM-84612-no-log4j-8506423826-21dd3f8-SNAPSHOT"
-    implementation "com.exactpro.th2:act-gui-core:3.0.0-RM-84612-8479410336-ceca9b5-SNAPSHOT"
-    implementation "com.exactpro.th2:grpc-act-uiframework-win-demo:1.3.0-RM-84612-8383647500-b699975-SNAPSHOT"
+    implementation "com.exactpro.th2:grpc-hand:3.0.0-RM-84612-8517996781-SNAPSHOT"
+    implementation "com.exactpro.th2:hand:5.0.0-RM-84612-no-log4j-8518069897-76ce516-SNAPSHOT"
+    implementation "com.exactpro.th2:act-gui-core:3.0.0-RM-84612-8518102267-601b1f6-SNAPSHOT"
+    implementation "com.exactpro.th2:grpc-act-uiframework-win-demo:1.3.0-RM-84612-8515753187-73533d0-SNAPSHOT"
 
     implementation "com.fasterxml.jackson.core:jackson-annotations"
     implementation "org.apache.commons:commons-lang3"
