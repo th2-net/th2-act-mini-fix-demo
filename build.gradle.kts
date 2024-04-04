@@ -2,6 +2,8 @@ plugins {
     id("application")
     id("java")
 
+    kotlin("jvm") version "1.8.22" apply false
+
     val th2PluginVersion = "0.0.4"
     id("com.exactpro.th2.gradle.component") version th2PluginVersion
 }
