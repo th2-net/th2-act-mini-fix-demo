@@ -14,10 +14,10 @@ RUN apk add --no-cache make git gcc musl-dev swig \
         -I../src -L../src libwebp_java_wrap.c -lwebp -o libwebp.so
 
 FROM gradle:7.6-jdk11 AS build
-ARG release_version
-ARG vcs_url
+#ARG release_version
+#ARG vcs_url
 COPY ./ .
-RUN gradle --no-daemon clean build dockerPrepare -Prelease_version=${release_version} -Pvcs_url=${vcs_url}
+RUN gradle --no-daemon clean build dockerPrepare -Prelease_version=2.0.0 -Pvcs_url=https://github.com/th2-net/th2-act-uiframework-win-demo
 
 FROM adoptopenjdk/openjdk11:alpine
 ENV GRPC_PORT=8080 \
