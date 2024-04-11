@@ -20,10 +20,10 @@ configurations.all {
 dependencies {
     implementation("com.exactpro.th2:common:5.10.0-dev")
     implementation("com.exactpro.th2:grpc-common:4.4.0-dev")
-    implementation("com.exactpro.th2:grpc-hand:3.0.0-RM-84612-8595680156-664ca73-SNAPSHOT")
-    implementation("com.exactpro.th2:hand:5.0.0-RM-84612-no-log4j-8545363969-62a26ef-SNAPSHOT")
-    implementation("com.exactpro.th2:act-gui-core:3.0.0-RM-84612-8552406828-ac72781-SNAPSHOT")
-    implementation("com.exactpro.th2:grpc-act-uiframework-win-demo:1.3.0-RM-84612-8544485219-ed352c1-SNAPSHOT")
+    implementation("com.exactpro.th2:grpc-hand:3.0.0-dev")
+    implementation("com.exactpro.th2:hand:5.0.2-dev")
+    implementation("com.exactpro.th2:act-gui-core:3.0.0-RM-84612-8643886444-bf5d557-SNAPSHOT")
+    implementation("com.exactpro.th2:grpc-act-uiframework-win-demo:1.3.0-RM-84612-8644030547-e436da8-SNAPSHOT")
 
     implementation("com.fasterxml.jackson.core:jackson-annotations")
     implementation("org.apache.commons:commons-lang3")
